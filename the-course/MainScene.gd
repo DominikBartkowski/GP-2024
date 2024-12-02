@@ -1,11 +1,18 @@
-extends Control
+extends Button
 
+# Reference to the AudioStreamPlayer
+@onready var audio_player = $AudioStreamPlayer  # Ensure the player is a child of this button or adjust the path accordingly
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+# Path to the sound file (you can also assign this via the inspector if needed)
+var sound = preload("res://assets/Sounds/")
 
+func _ready():
+	# Optionally, preload sound here if not using a direct path in the inspector
+	audio_player.stream = sound
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	# Connect the button press signal
+	self.pressed.connect(_on_button_pressed)
+
+func _on_button_pressed():
+	# Play sound when the button is pressed
+	audio_player.play()
